@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JS," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="概述高中读化学时一直觉得知识点好零碎，徘徊门外分数也上不去；后来高一舍友告诉我要形成自己的体系，闭上眼睛都能想象得出化学的课本章节，可以从元素周期表或是有机无机开始为基点打造自己的学习体系脉络；说来也神奇，有了这个想法后学习真的轻松不少，打怪升级分数也上去了。废话有点多，谁让 js 是一门不需要学习就能直接先用的语言呢？导致不少人压根就迷迷糊糊的或者雾里看花似懂非懂；那个什么鬼前端知识图片就是坑">
+<meta name="keywords" content="JS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重新认识JS">
+<meta property="og:url" content="https://devil0.github.io/2018/04/08/重新认识JS/index.html">
+<meta property="og:site_name" content="devil_blog">
+<meta property="og:description" content="概述高中读化学时一直觉得知识点好零碎，徘徊门外分数也上不去；后来高一舍友告诉我要形成自己的体系，闭上眼睛都能想象得出化学的课本章节，可以从元素周期表或是有机无机开始为基点打造自己的学习体系脉络；说来也神奇，有了这个想法后学习真的轻松不少，打怪升级分数也上去了。废话有点多，谁让 js 是一门不需要学习就能直接先用的语言呢？导致不少人压根就迷迷糊糊的或者雾里看花似懂非懂；那个什么鬼前端知识图片就是坑">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://devil0.github.io/assets/javascript.png">
+<meta property="og:updated_time" content="2018-07-10T03:23:52.994Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="重新认识JS">
+<meta name="twitter:description" content="概述高中读化学时一直觉得知识点好零碎，徘徊门外分数也上不去；后来高一舍友告诉我要形成自己的体系，闭上眼睛都能想象得出化学的课本章节，可以从元素周期表或是有机无机开始为基点打造自己的学习体系脉络；说来也神奇，有了这个想法后学习真的轻松不少，打怪升级分数也上去了。废话有点多，谁让 js 是一门不需要学习就能直接先用的语言呢？导致不少人压根就迷迷糊糊的或者雾里看花似懂非懂；那个什么鬼前端知识图片就是坑">
+<meta name="twitter:image" content="https://devil0.github.io/assets/javascript.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'Y5LZM433PZ',
+      apiKey: 'f4e266eed849d4da43f94176745467c1',
+      indexName: 'myBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://devil0.github.io/2018/04/08/重新认识JS/"/>
+
+
+
+
+
+  <title>重新认识JS | devil_blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <a href="https://github.com/Devil0"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 2" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">devil_blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">where is the way, where are you</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://devil0.github.io/2018/04/08/重新认识JS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="谁动了我的代码">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/assets/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="devil_blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">重新认识JS</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T10:07:42+08:00">
+                2018-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JS体系/" itemprop="url" rel="index">
+                    <span itemprop="name">JS体系</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <img src="/assets/javascript.png" class="[class names]" width="600" height="350" title="JavaScript">
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>高中读化学时一直觉得知识点好零碎，徘徊门外分数也上不去；后来高一舍友告诉我要形成自己的体系，闭上眼睛都能想象得出化学的课本章节，可以从元素周期表或是有机无机开始为基点打造自己的<strong>学习体系脉络</strong>；说来也神奇，有了这个想法后学习真的轻松不少，打怪升级分数也上去了。废话有点多，谁让 js 是一门不需要学习就能直接先用的语言呢？导致不少人压根就迷迷糊糊的或者雾里看花似懂非懂；那个什么鬼前端知识图片就是坑，算了，入正题。。。</p>
+<a id="more"></a>
+<h3 id="何为程序"><a href="#何为程序" class="headerlink" title="何为程序"></a>何为程序</h3><p>作为一个电子信息科学与技术专业，学硬件又学软件什么的，大学算是有过了一遍从基础电信号——数电——汇编——C 语言的大致历史，个人理解的电子世界是这样的：01 电信号构成基石——排列组合逻辑运算构成数字芯片实现一定功能（输入输出及存储），排列组合构成功能指令——为编程方便简化指令成为汇编语言（assembling）——进一步简化为各个分支<code>c、c++、c#、java、.net</code>……(高级语言)</p>
+<h3 id="定位——轻量级的脚本语言"><a href="#定位——轻量级的脚本语言" class="headerlink" title="定位——轻量级的脚本语言"></a>定位——轻量级的脚本语言</h3><p>脚本语言的主要特征是：程序代码即是脚本程序，亦是最终可执行文件。脚本语言可分为独立型和嵌入型，独立型脚本语言在其执行时完全依赖于解释器，而嵌入型脚本语言通常在编程语言中（如 C，C++，VB，Java 等）被嵌入使用</p>
+<blockquote><p>JavaScript 是一种嵌入式（embedded）语言。它本身提供的核心语法不算很多，只能用来做一些数学和逻辑运算。JavaScript 本身不提供任何与 I/O（输入/输出）相关的 API，都要靠宿主环境（host）提供，所以 JavaScript 只合适嵌入更大型的应用程序环境，去调用宿主环境提供的底层 API。</p>
+<footer><strong>阮一峰</strong><cite><a href="http://javascript.ruanyifeng.com/introduction/intro.html#toc2" target="_blank" rel="noopener">什么是 JavaScript 语言</a></cite></footer></blockquote>
+<p>JS 在 web 方面应用，目前主要在宿主环境有 NODE 和浏览器，客户端与服务端。</p>
+<h3 id="js-的核心语法"><a href="#js-的核心语法" class="headerlink" title="js 的核心语法"></a>js 的核心语法</h3><blockquote>
+<p>类对象编程语法</p>
+</blockquote>
+<ol>
+<li>基本的语法构造</li>
+<li>标准库</li>
+<li>宿主环境提供的 API</li>
+</ol>
+<h4 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h4><blockquote>
+<p>基于规则的一门语言，类似我们学的自然语言，从最简单的拼音字母到词乃至句子表达的意思——对于程序来说则意味着命令</p>
+</blockquote>
+<ol>
+<li>变量</li>
+<li>标识符（保留字）</li>
+<li>注释</li>
+<li>区块<ul>
+<li>作用域</li>
+<li><code>var const 与 let</code></li>
+</ul>
+</li>
+<li>逻辑语句<ul>
+<li>条件语句——if、switch、? :</li>
+<li>循环语句——for、do until、while（<code>break跳出当前循环、continue用于终止循环</code>）</li>
+</ul>
+</li>
+</ol>
+<h4 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h4><blockquote>
+<p>js作为一门动态类型语言，其实是没有所谓类型可言，对语言引擎和开发人员来说，类型是值的内部特征，它定义了值的行为，以使其区别于其他值</p>
+</blockquote>
+<ol>
+<li>空类型<ul>
+<li>null</li>
+<li>undefined</li>
+</ul>
+</li>
+<li>原始类型/值类型——变量存值新开内存<ul>
+<li>string——base64（字符编码二进制转换用于传输）btoa()、atob()</li>
+<li>number——64位浮点数、精度、范围、parseInt（string,formats）、parseFloat</li>
+<li>boolean——自动转为false的情况：undefined、null、NaN、0、’’</li>
+</ul>
+</li>
+<li>复合类型/引用类型——变量存对象地址新开内存，属性值另外存<ul>
+<li>object——子类有 <code>array、function、object</code></li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>对象深、浅拷贝<br>null undefined区别<br>值类型确定：typeof、instanceof、Object.prototype.toString<br>NaN（Not a Number）——任何运算都是自身，属于Number；Infinity——无穷大/小，非0数值除以0；两者运算求导，不可导为NaN</p>
+</blockquote>
+<p><strong>typeof</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> a === <span class="string">'undefined'</span> <span class="comment">// 用于检测变量、函数是否定义</span></span><br><span class="line">!a &amp;&amp; <span class="keyword">typeof</span> a === <span class="string">'object'</span> <span class="comment">// 检测null，可检测出的为除null基本数据类型+function</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h4><p>概念： 数据集或功能集——面向对象编程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">抽象性：抽取我们所需要的数据信息等</span><br><span class="line">封装性</span><br><span class="line">继承性</span><br></pre></td></tr></table></figure></p>
+<p>增删查改<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 增改</span></span><br><span class="line">obj.key</span><br><span class="line">obj[<span class="string">'key'</span>] </span><br><span class="line"><span class="comment">// 遍历</span></span><br><span class="line">key <span class="keyword">in</span> obj</span><br><span class="line"><span class="built_in">Object</span>.keys(obj) <span class="comment">// 自身属性</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> obj) <span class="comment">// enumerable属性（结合hasOwnProperty修改自身key）</span></span><br><span class="line"><span class="comment">// 删除</span></span><br><span class="line"><span class="keyword">delete</span> obj.key <span class="comment">// configurable为true的属性，否则为false</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><p>继承对象的特性，需要区分类数组（arguments）<br>类数组转为数组或使用数组方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = <span class="built_in">Array</span>.prototype.slice.call(arrayLike)</span><br><span class="line"><span class="built_in">Array</span>.prototype.forEach.call(arrayLike, fn)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/10/git备忘录/" rel="prev" title="Git备忘录">
+                Git备忘录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTgxMS8xMjM0Nw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/assets/avatar.jpg"
+                alt="谁动了我的代码" />
+            
+              <p class="site-author-name" itemprop="name">谁动了我的代码</p>
+              <p class="site-description motion-element" itemprop="description">A blog show and record my life, as a front-end</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#何为程序"><span class="nav-number">1.1.</span> <span class="nav-text">何为程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定位——轻量级的脚本语言"><span class="nav-number">1.2.</span> <span class="nav-text">定位——轻量级的脚本语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#js-的核心语法"><span class="nav-number">1.3.</span> <span class="nav-text">js 的核心语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基础语法"><span class="nav-number">1.3.1.</span> <span class="nav-text">基础语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据类型"><span class="nav-number">1.3.2.</span> <span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对象"><span class="nav-number">1.3.3.</span> <span class="nav-text">对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数组"><span class="nav-number">1.3.4.</span> <span class="nav-text">数组</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">谁动了我的代码</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
