@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="file," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前端不时会碰到关于上传图片，下载Excel报表日志之类的业务需求，从原始的form表单提交到new formData()异步上传；从直接window.open(url)到new blob()、new fileReader()读取返回的二进制流文件。都让我们对文件处理更多的选择与操作，本文主要记录前端中关于文件的处理，包括上传下载及相关API。">
+<meta name="keywords" content="file">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端文件上传下载">
+<meta property="og:url" content="https://devil0.github.io/2018/07/12/前端文件上传下载/index.html">
+<meta property="og:site_name" content="devil_blog">
+<meta property="og:description" content="前端不时会碰到关于上传图片，下载Excel报表日志之类的业务需求，从原始的form表单提交到new formData()异步上传；从直接window.open(url)到new blob()、new fileReader()读取返回的二进制流文件。都让我们对文件处理更多的选择与操作，本文主要记录前端中关于文件的处理，包括上传下载及相关API。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://devil0.github.io/assets/fileReader.png">
+<meta property="og:image" content="https://devil0.github.io/assets/formData.png">
+<meta property="og:updated_time" content="2018-07-12T09:58:05.623Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端文件上传下载">
+<meta name="twitter:description" content="前端不时会碰到关于上传图片，下载Excel报表日志之类的业务需求，从原始的form表单提交到new formData()异步上传；从直接window.open(url)到new blob()、new fileReader()读取返回的二进制流文件。都让我们对文件处理更多的选择与操作，本文主要记录前端中关于文件的处理，包括上传下载及相关API。">
+<meta name="twitter:image" content="https://devil0.github.io/assets/fileReader.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'Y5LZM433PZ',
+      apiKey: 'f4e266eed849d4da43f94176745467c1',
+      indexName: 'myBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://devil0.github.io/2018/07/12/前端文件上传下载/"/>
+
+
+
+
+
+  <title>前端文件上传下载 | devil_blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <a href="https://github.com/Devil0"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 2" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">devil_blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">where is the way, where are you</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://devil0.github.io/2018/07/12/前端文件上传下载/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="谁动了我的代码">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/assets/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="devil_blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">前端文件上传下载</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-12T10:00:26+08:00">
+                2018-07-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>前端不时会碰到关于上传图片，下载Excel报表日志之类的业务需求，从原始的form表单提交到<code>new formData()</code>异步上传；从直接<code>window.open(url)</code>到<code>new blob()</code>、<code>new fileReader()</code>读取返回的二进制流文件。都让我们对文件处理更多的选择与操作，本文主要记录前端中关于文件的处理，包括上传下载及相关API。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><p>文件上传需要先调用读取本地文件API</p>
+<h3 id="获取文件方式"><a href="#获取文件方式" class="headerlink" title="获取文件方式"></a>获取文件方式</h3><h4 id="input方式"><a href="#input方式" class="headerlink" title="input方式"></a>input方式</h4><p><code>input[type=&#39;file&#39; multiple]</code>调用，<code>multiple</code>属性可以允许客户上传多个文件。获取该dom节点可以看到有个files属性(FileList对象)，它对应文件列表，是一个类数组，这个列表中的每一个文件，就是一个 file 对象。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=&apos;file&apos; multiple /&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    document.querySelector(&apos;input&apos;).onchange = function(e) &#123;</span><br><span class="line">    console.log(e.target.files);</span><br><span class="line">    &#125;;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>tips:上传同个文件不触发onchange事件——每次上传之后重置input.value（上传文件路径）</p>
+</blockquote>
+<h4 id="drag方式"><a href="#drag方式" class="headerlink" title="drag方式"></a>drag方式</h4><p>dom.ondrop事件获取e.dataTransfer.files（概念同上），dataTransfer指向一个对象，包含了与拖动相关的各种信息<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;textarea&gt;&lt;/textarea&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">const</span> container  = <span class="built_in">document</span>.querySelector(<span class="string">'textarea'</span>);</span><br><span class="line">container.ondragover = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="literal">false</span>; &#125;;</span><br><span class="line">container.ondrop = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    e.stopPropagation();</span><br><span class="line">    e.preventDefault();</span><br><span class="line">    <span class="built_in">console</span>.log(e.dataTransfer.files);</span><br><span class="line">&#125;;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="file对象"><a href="#file对象" class="headerlink" title="file对象"></a>file对象</h3><p>通过用户交互获取到需要上传的文件，它的属性如下：<br>    name：文件名<br>    size：文件大小，单位为字节，可以根据文件大小来进行限制<br>    type：文件的 MIME 类型，如果分辨不出类型，则为空字符串，可以由此来限制只允许上传图片<br>    lastModified：文件的上次修改时间，格式为时间戳。<br>    lastModifiedDate：文件的上次修改时间，格式为 Date 对象实例。</p>
+<h3 id="FileReader-对象"><a href="#FileReader-对象" class="headerlink" title="FileReader 对象"></a>FileReader 对象</h3><p>有时候我们需要读取文件的一些内容，例如预览图片；而FileReader对象就是用来把文件读入内存，并且读取文件中的数据接受 File 对象或 Blob 对象作为参数。<br><img src="/assets/fileReader.png"><br>常规操作——按照<strong>需求方式</strong>读取文件并处理文件<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">reader.onload = <span class="function"><span class="keyword">function</span> (<span class="params">ev</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(ev.target.result)</span><br><span class="line">    <span class="built_in">console</span>.log(reader.result)</span><br><span class="line">&#125;</span><br><span class="line">reader.readAs**方式**(file);</span><br></pre></td></tr></table></figure></p>
+<h3 id="原始form表单提交方式"><a href="#原始form表单提交方式" class="headerlink" title="原始form表单提交方式"></a>原始form表单提交方式</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"/saveFile"</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">"fileName"</span> /&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"submit"</span>&gt;</span>上传<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>貌似也没啥问题，可是会刷新网页！这就尴尬了，很多情况下我们不想这样子，所以ajax提交来了。</p>
+<h3 id="ajax构建FormData提交"><a href="#ajax构建FormData提交" class="headerlink" title="ajax构建FormData提交"></a>ajax构建FormData提交</h3><p>先来看看FormData——模拟form表单将数据编译成键值对，以便用XMLHttpRequest来发送数据<br><img src="/assets/formData.png"><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> FormData = <span class="keyword">new</span> FormData();</span><br><span class="line">FormData.append(name, file);</span><br><span class="line">ajax(FormData)...</span><br></pre></td></tr></table></figure></p>
+<h2 id="文件下载"><a href="#文件下载" class="headerlink" title="文件下载"></a>文件下载</h2><h3 id="传统下载"><a href="#传统下载" class="headerlink" title="传统下载"></a>传统下载</h3><p>原理是直接访问网络资源地址，触发浏览器下载行为</p>
+<ol>
+<li><code>window.open(url)</code>或iframe方式。iframe已被弃用，新建窗口打开资源文件方式会有一闪而过的现象，不大友好。</li>
+<li>a 标签的 download 属性</li>
+</ol>
+<h3 id="异步下载"><a href="#异步下载" class="headerlink" title="异步下载"></a>异步下载</h3><p>原理是获取到文件后重新构造文件URL，访问下载。在这里需要了解一下<strong>blob</strong></p>
+<h4 id="blob对象"><a href="#blob对象" class="headerlink" title="blob对象"></a>blob对象</h4><p>上文中，File 对象便是是继承自 Blob 对象，Blob 对象代表了一段二进制数据，它有两个属性：size 属性表示字节长度，type 属性表示 MIME 类型。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let blob = new Blob([&apos;hello blob&apos;], &#123;type:&quot;text/plain&quot;&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>Blob 构造函数中的第一个参数是一个数组，可以存放 ArrayBuffer对象、ArrayBufferView 对象、Blob对象和字符串<br>此外还可以通过blob对象slice或canvas.toBlob()方式构造。</p>
+<h4 id="ajax文件下载"><a href="#ajax文件下载" class="headerlink" title="ajax文件下载"></a>ajax文件下载</h4><ol>
+<li><p>首先要理清responseType, 即返回类型，根据不同返回类型ajax去不同地方取返回值并做不同处理，如下：<br>xhr.response：ArrayBuffer、Blob、Document，json<br>xhr.responseText：DOMString（等同于默认设置responseType=’’）<br>这里我们根据自身需求设置responseType</p>
+</li>
+<li><p>下载的文件处理</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对返回的文件构造做兼容处理</span></span><br><span class="line">res = <span class="string">'response'</span> <span class="keyword">in</span> xhr ? xhr.response : xhr.responseText</span><br><span class="line"><span class="keyword">let</span> file = <span class="keyword">new</span> Blob([res])</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建a链接模拟点击下载</span></span><br><span class="line">downloadFile(file, name, type = <span class="string">'xlsx'</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> url = <span class="built_in">window</span>.URL.createObjectURL(file)</span><br><span class="line">  <span class="keyword">let</span> link = <span class="built_in">document</span>.createElement(<span class="string">'a'</span>)</span><br><span class="line">  link.style.display = <span class="string">'none'</span></span><br><span class="line">  link.href = url</span><br><span class="line">  <span class="comment">// 设置下载文件名</span></span><br><span class="line">  link.setAttribute(<span class="string">'download'</span>, <span class="string">`<span class="subst">$&#123;name&#125;</span>.<span class="subst">$&#123;type&#125;</span>`</span>)</span><br><span class="line">  <span class="built_in">document</span>.body.appendChild(link)</span><br><span class="line">  link.click()</span><br><span class="line">  <span class="built_in">document</span>.body.removeChild(link)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/file/" rel="tag"># file</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/10/Vue项目内嵌Cordova/" rel="next" title="Vue项目内嵌Cordova">
+                <i class="fa fa-chevron-left"></i> Vue项目内嵌Cordova
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTgxMS8xMjM0Nw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/assets/avatar.jpg"
+                alt="谁动了我的代码" />
+            
+              <p class="site-author-name" itemprop="name">谁动了我的代码</p>
+              <p class="site-description motion-element" itemprop="description">A blog show and record my life, as a front-end</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件上传"><span class="nav-number">1.</span> <span class="nav-text">文件上传</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取文件方式"><span class="nav-number">1.1.</span> <span class="nav-text">获取文件方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#input方式"><span class="nav-number">1.1.1.</span> <span class="nav-text">input方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#drag方式"><span class="nav-number">1.1.2.</span> <span class="nav-text">drag方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#file对象"><span class="nav-number">1.2.</span> <span class="nav-text">file对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FileReader-对象"><span class="nav-number">1.3.</span> <span class="nav-text">FileReader 对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原始form表单提交方式"><span class="nav-number">1.4.</span> <span class="nav-text">原始form表单提交方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ajax构建FormData提交"><span class="nav-number">1.5.</span> <span class="nav-text">ajax构建FormData提交</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件下载"><span class="nav-number">2.</span> <span class="nav-text">文件下载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#传统下载"><span class="nav-number">2.1.</span> <span class="nav-text">传统下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异步下载"><span class="nav-number">2.2.</span> <span class="nav-text">异步下载</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#blob对象"><span class="nav-number">2.2.1.</span> <span class="nav-text">blob对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ajax文件下载"><span class="nav-number">2.2.2.</span> <span class="nav-text">ajax文件下载</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">谁动了我的代码</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
