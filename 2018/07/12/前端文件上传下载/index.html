@@ -382,7 +382,7 @@
 <blockquote>
 <p>tips:上传同个文件不触发onchange事件——每次上传之后重置input.value（上传文件路径）</p>
 </blockquote>
-<h4 id="drag方式"><a href="#drag方式" class="headerlink" title="drag方式"></a>drag方式</h4><p>dom.ondrop事件获取e.dataTransfer.files（概念同上），dataTransfer指向一个对象，包含了与拖动相关的各种信息<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;textarea&gt;&lt;/textarea&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">const</span> container  = <span class="built_in">document</span>.querySelector(<span class="string">'textarea'</span>);</span><br><span class="line">container.ondragover = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="literal">false</span>; &#125;;</span><br><span class="line">container.ondrop = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    e.stopPropagation();</span><br><span class="line">    e.preventDefault();</span><br><span class="line">    <span class="built_in">console</span>.log(e.dataTransfer.files);</span><br><span class="line">&#125;;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="drag方式"><a href="#drag方式" class="headerlink" title="drag方式"></a>drag方式</h4><p>dom.ondrop事件获取e.dataTransfer.files（概念同上），dataTransfer指向一个对象，包含了与拖动相关的各种信息<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;textarea&gt;<span class="xml"><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span></span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">const</span> container  = <span class="built_in">document</span>.querySelector(<span class="string">'textarea'</span>);</span><br><span class="line">container.ondragover = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="literal">false</span>; &#125;;</span><br><span class="line">container.ondrop = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    e.stopPropagation();</span><br><span class="line">    e.preventDefault();</span><br><span class="line">    <span class="built_in">console</span>.log(e.dataTransfer.files);</span><br><span class="line">&#125;;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure></p>
 <h3 id="file对象"><a href="#file对象" class="headerlink" title="file对象"></a>file对象</h3><p>通过用户交互获取到需要上传的文件，它的属性如下：<br>    name：文件名<br>    size：文件大小，单位为字节，可以根据文件大小来进行限制<br>    type：文件的 MIME 类型，如果分辨不出类型，则为空字符串，可以由此来限制只允许上传图片<br>    lastModified：文件的上次修改时间，格式为时间戳。<br>    lastModifiedDate：文件的上次修改时间，格式为 Date 对象实例。</p>
 <h3 id="FileReader-对象"><a href="#FileReader-对象" class="headerlink" title="FileReader 对象"></a>FileReader 对象</h3><p>有时候我们需要读取文件的一些内容，例如预览图片；而FileReader对象就是用来把文件读入内存，并且读取文件中的数据接受 File 对象或 Blob 对象作为参数。<br><img src="/assets/fileReader.png"><br>常规操作——按照<strong>需求方式</strong>读取文件并处理文件<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">reader.onload = <span class="function"><span class="keyword">function</span> (<span class="params">ev</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(ev.target.result)</span><br><span class="line">    <span class="built_in">console</span>.log(reader.result)</span><br><span class="line">&#125;</span><br><span class="line">reader.readAs**方式**(file);</span><br></pre></td></tr></table></figure></p>
 <h3 id="原始form表单提交方式"><a href="#原始form表单提交方式" class="headerlink" title="原始form表单提交方式"></a>原始form表单提交方式</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"/saveFile"</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">"fileName"</span> /&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"submit"</span>&gt;</span>上传<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -441,6 +441,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/16/web前端打印实现/" rel="prev" title="web前端打印实现">
+                web前端打印实现 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -526,7 +530,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -548,7 +552,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

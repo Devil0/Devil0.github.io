@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="JS," />
+  <meta name="keywords" content="js," />
 
 
 
@@ -79,20 +79,21 @@
 
 
 
-<meta name="description" content="概述高中读化学时一直觉得知识点好零碎，徘徊门外分数也上不去；后来高一舍友告诉我要形成自己的体系，闭上眼睛都能想象得出化学的课本章节，可以从元素周期表或是有机无机开始为基点打造自己的学习体系脉络；说来也神奇，有了这个想法后学习真的轻松不少，打怪升级分数也上去了。废话有点多，谁让 js 是一门不需要学习就能直接先用的语言呢？导致不少人压根就迷迷糊糊的或者雾里看花似懂非懂；那个什么鬼前端知识图片就是坑">
-<meta name="keywords" content="JS">
+<meta name="description" content="横看成岭侧成峰 远近高低各不同。  前言js 是面向对象设计的语言，而面向对象意味着要先描述对象——规定具体对象的特性与行为。然而在实际中我们可以看到很多对象的特性与行为都可以复用，这意味着这部分代码是可以抽象出来复用的。java 采用了类概念，引申自我们对自然事物的抽象概念，譬如生物课本上的界门纲目科属种。JS，作为一个‘蠢弟弟’，就不这样子干。就不要类的概念，但是为了解决相同的的问题自己搞了">
+<meta name="keywords" content="js">
 <meta property="og:type" content="article">
-<meta property="og:title" content="重新认识JS">
-<meta property="og:url" content="https://devil0.github.io/2018/04/08/重新认识JS/index.html">
+<meta property="og:title" content="再次思考js中的原型">
+<meta property="og:url" content="https://devil0.github.io/2018/07/17/再次思考js中的原型/index.html">
 <meta property="og:site_name" content="devil_blog">
-<meta property="og:description" content="概述高中读化学时一直觉得知识点好零碎，徘徊门外分数也上不去；后来高一舍友告诉我要形成自己的体系，闭上眼睛都能想象得出化学的课本章节，可以从元素周期表或是有机无机开始为基点打造自己的学习体系脉络；说来也神奇，有了这个想法后学习真的轻松不少，打怪升级分数也上去了。废话有点多，谁让 js 是一门不需要学习就能直接先用的语言呢？导致不少人压根就迷迷糊糊的或者雾里看花似懂非懂；那个什么鬼前端知识图片就是坑">
+<meta property="og:description" content="横看成岭侧成峰 远近高低各不同。  前言js 是面向对象设计的语言，而面向对象意味着要先描述对象——规定具体对象的特性与行为。然而在实际中我们可以看到很多对象的特性与行为都可以复用，这意味着这部分代码是可以抽象出来复用的。java 采用了类概念，引申自我们对自然事物的抽象概念，譬如生物课本上的界门纲目科属种。JS，作为一个‘蠢弟弟’，就不这样子干。就不要类的概念，但是为了解决相同的的问题自己搞了">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://devil0.github.io/assets/javascript.png">
-<meta property="og:updated_time" content="2018-07-13T09:36:55.426Z">
+<meta property="og:image" content="https://devil0.github.io/assets/prototype.png">
+<meta property="og:image" content="https://devil0.github.io/assets/prototype.jpg">
+<meta property="og:updated_time" content="2018-07-19T08:37:23.305Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="重新认识JS">
-<meta name="twitter:description" content="概述高中读化学时一直觉得知识点好零碎，徘徊门外分数也上不去；后来高一舍友告诉我要形成自己的体系，闭上眼睛都能想象得出化学的课本章节，可以从元素周期表或是有机无机开始为基点打造自己的学习体系脉络；说来也神奇，有了这个想法后学习真的轻松不少，打怪升级分数也上去了。废话有点多，谁让 js 是一门不需要学习就能直接先用的语言呢？导致不少人压根就迷迷糊糊的或者雾里看花似懂非懂；那个什么鬼前端知识图片就是坑">
-<meta name="twitter:image" content="https://devil0.github.io/assets/javascript.png">
+<meta name="twitter:title" content="再次思考js中的原型">
+<meta name="twitter:description" content="横看成岭侧成峰 远近高低各不同。  前言js 是面向对象设计的语言，而面向对象意味着要先描述对象——规定具体对象的特性与行为。然而在实际中我们可以看到很多对象的特性与行为都可以复用，这意味着这部分代码是可以抽象出来复用的。java 采用了类概念，引申自我们对自然事物的抽象概念，譬如生物课本上的界门纲目科属种。JS，作为一个‘蠢弟弟’，就不这样子干。就不要类的概念，但是为了解决相同的的问题自己搞了">
+<meta name="twitter:image" content="https://devil0.github.io/assets/prototype.png">
 
 
 
@@ -122,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="https://devil0.github.io/2018/04/08/重新认识JS/"/>
+  <link rel="canonical" href="https://devil0.github.io/2018/07/17/再次思考js中的原型/"/>
 
 
 
 
 
-  <title>重新认识JS | devil_blog</title>
+  <title>再次思考js中的原型 | devil_blog</title>
   
 
 
@@ -305,7 +306,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://devil0.github.io/2018/04/08/重新认识JS/">
+    <link itemprop="mainEntityOfPage" href="https://devil0.github.io/2018/07/17/再次思考js中的原型/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="谁动了我的代码">
@@ -322,7 +323,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">重新认识JS</h1>
+          <h1 class="post-title" itemprop="name headline">再次思考js中的原型</h1>
         
 
         <div class="post-meta">
@@ -334,8 +335,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T10:07:42+08:00">
-                2018-04-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-17T11:16:25+08:00">
+                2018-07-17
               </time>
             
 
@@ -344,28 +345,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JS体系/" itemprop="url" rel="index">
-                    <span itemprop="name">JS体系</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -394,73 +373,32 @@
       
 
       
-        <img src="/assets/javascript.png" class="[class names]" width="600" height="350" title="JavaScript">
-<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>高中读化学时一直觉得知识点好零碎，徘徊门外分数也上不去；后来高一舍友告诉我要形成自己的体系，闭上眼睛都能想象得出化学的课本章节，可以从元素周期表或是有机无机开始为基点打造自己的<strong>学习体系脉络</strong>；说来也神奇，有了这个想法后学习真的轻松不少，打怪升级分数也上去了。废话有点多，谁让 js 是一门不需要学习就能直接先用的语言呢？导致不少人压根就迷迷糊糊的或者雾里看花似懂非懂；那个什么鬼前端知识图片就是坑，算了，入正题。。。</p>
+        <blockquote>
+<p><strong>横看成岭侧成峰 远近高低各不同。</strong></p>
+</blockquote>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>js 是面向对象设计的语言，而面向对象意味着要先描述对象——规定具体对象的特性与行为。然而在实际中我们可以看到很多对象的特性与行为都可以复用，这意味着这部分代码是可以抽象出来复用的。java 采用了<strong>类</strong>概念，引申自我们对自然事物的抽象概念，譬如生物课本上的<strong>界门纲目科属种</strong>。JS，作为一个‘蠢弟弟’，就不这样子干。就不要类的概念，但是为了解决相同的的问题自己搞了一套对象关联对象的东西（所谓继承）——原型与原型链</p>
 <a id="more"></a>
-<h3 id="何为程序"><a href="#何为程序" class="headerlink" title="何为程序"></a>何为程序</h3><p>作为一个电子信息科学与技术专业，学硬件又学软件什么的，大学算是有过了一遍从基础电信号——数电——汇编——C 语言的大致历史，个人理解的电子世界是这样的：01 电信号构成基石——排列组合逻辑运算构成数字芯片实现一定功能（输入输出及存储），排列组合构成功能指令——为编程方便简化指令成为汇编语言（assembling）——进一步简化为各个分支<code>c、c++、c#、java、.net</code>……(高级语言)</p>
-<h3 id="定位——轻量级的脚本语言"><a href="#定位——轻量级的脚本语言" class="headerlink" title="定位——轻量级的脚本语言"></a>定位——轻量级的脚本语言</h3><p>脚本语言的主要特征是：程序代码即是脚本程序，亦是最终可执行文件。脚本语言可分为独立型和嵌入型，独立型脚本语言在其执行时完全依赖于解释器，而嵌入型脚本语言通常在编程语言中（如 C，C++，VB，Java 等）被嵌入使用</p>
-<blockquote><p>JavaScript 是一种嵌入式（embedded）语言。它本身提供的核心语法不算很多，只能用来做一些数学和逻辑运算。JavaScript 本身不提供任何与 I/O（输入/输出）相关的 API，都要靠宿主环境（host）提供，所以 JavaScript 只合适嵌入更大型的应用程序环境，去调用宿主环境提供的底层 API。</p>
-<footer><strong>阮一峰</strong><cite><a href="http://javascript.ruanyifeng.com/introduction/intro.html#toc2" target="_blank" rel="noopener">什么是 JavaScript 语言</a></cite></footer></blockquote>
-<p>JS 在 web 方面应用，目前主要在宿主环境有 NODE 和浏览器，客户端与服务端。</p>
-<h3 id="js-的核心语法"><a href="#js-的核心语法" class="headerlink" title="js 的核心语法"></a>js 的核心语法</h3><blockquote>
-<p>类对象编程语法</p>
+<img src="/assets/prototype.png">
+<h3 id="让我们来new一个对象"><a href="#让我们来new一个对象" class="headerlink" title="让我们来new一个对象"></a>让我们来new一个对象</h3><blockquote>
+<p>为了解决从哪里来到哪里去这个问题，我们可以看对象是怎么定义出来的。看完之后对于这个原型，原型链问题也就迎刃而解了。</p>
 </blockquote>
-<ol>
-<li>基本的语法构造</li>
-<li>标准库</li>
-<li>宿主环境提供的 API</li>
-</ol>
-<h4 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h4><blockquote>
-<p>基于规则的一门语言，类似我们学的自然语言，从最简单的拼音字母到词乃至句子表达的意思——对于程序来说则意味着命令</p>
-</blockquote>
-<ol>
-<li>变量</li>
-<li>标识符（保留字）</li>
-<li>注释</li>
-<li>区块<ul>
-<li>作用域</li>
-<li><code>var const 与 let</code></li>
-</ul>
-</li>
-<li>逻辑语句<ul>
-<li>条件语句——if、switch、? :</li>
-<li>循环语句——for、do until、while（<code>break跳出当前循环、continue用于终止循环</code>）</li>
-</ul>
-</li>
-</ol>
-<h4 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h4><blockquote>
-<p>js作为一门动态类型语言，其实是没有所谓类型可言，对语言引擎和开发人员来说，类型是值的内部特征，它定义了值的行为，以使其区别于其他值</p>
-</blockquote>
-<ol>
-<li>空类型<ul>
-<li>null</li>
-<li>undefined</li>
-</ul>
-</li>
-<li>原始类型/值类型——变量存值新开内存<ul>
-<li>string——base64（字符编码二进制转换用于传输）btoa()、atob()</li>
-<li>number——64位浮点数、精度、范围、parseInt（string,formats）、parseFloat</li>
-<li>boolean——自动转为false的情况：undefined、null、NaN、0、’’</li>
-</ul>
-</li>
-<li>复合类型/引用类型——变量存对象地址新开内存，属性值另外存<ul>
-<li>object——子类有 <code>array、function、object</code></li>
-</ul>
-</li>
-</ol>
+<h4 id="字面量方式"><a href="#字面量方式" class="headerlink" title="字面量方式"></a>字面量方式</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> o = &#123;</span><br><span class="line">  a: <span class="number">1</span>,</span><br><span class="line">  b: <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 控制台打印可以看到</span></span><br><span class="line">o._proto_ = <span class="built_in">Object</span>.prototype</span><br></pre></td></tr></table></figure>
+<p>这时候对象原型链指向 Object，于是乎这个新对象有了 Object 的 hasOwnProperty 等方法</p>
+<h4 id="构造函数方式"><a href="#构造函数方式" class="headerlink" title="构造函数方式"></a>构造函数方式</h4><p>我们知道当使用 new 操作符调用函数时，做了四步工作——新建对象，指定新对象的原型链是函数原型，绑定 this，返回新对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">nothing</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'you got a new object'</span>)</span><br><span class="line">&#125;</span><br><span class="line">nothing.prototype = &#123;&#125;</span><br><span class="line"><span class="keyword">let</span> a = <span class="keyword">new</span> nothing()</span><br><span class="line"><span class="comment">// 控制台打印可以看到</span></span><br><span class="line">a._proto_ = nothing.prototype = &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>原型链再一次被使用：链接到对象的继承——原型对象;可能细心的你会发现 a 的 constructor 变成了 Object()，因为这里把函数默认的实例原型对象自带的 constructor 给重置了。实际上 constructor 并不一定表示被 xx 函数构造的意味,它只是函数原型对象的一个默认对象充话费送的，指向当前函数的属性，实际上也没啥卵用。</p>
+<h4 id="Object-create-方式"><a href="#Object-create-方式" class="headerlink" title="Object.create()方式"></a>Object.create()方式</h4><p>相对好理解的对象间委托属性方式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> cat = &#123; <span class="attr">eat</span>: <span class="string">'people'</span> &#125;</span><br><span class="line"><span class="keyword">let</span> dog = <span class="built_in">Object</span>.create(cat)</span><br><span class="line"></span><br><span class="line">dog._proto_ = cat</span><br><span class="line">dog.eat = <span class="string">'people'</span></span><br></pre></td></tr></table></figure>
+<p>我们可以看到 Object.create 方式是直接把新建对象的原型链指向了传入的对象，新对象通过原型链找到了拥有传入对象的属性</p>
+<h4 id="class-关键字创建的对象"><a href="#class-关键字创建的对象" class="headerlink" title="class 关键字创建的对象"></a>class 关键字创建的对象</h4><p>es6 新增的语法糖来方便的构建便于理解的‘继承’关系；毕竟底层还是原型链方式,写法倒是和 java 类继承基本一样，<code>class</code>的本质是构造函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(name) &#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name</span><br><span class="line">  &#125;</span><br><span class="line">  say() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`I am <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>`</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 这里相当于</span></span><br><span class="line">Person.prototype = &#123;</span><br><span class="line">  <span class="keyword">constructor</span>(name) &#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name</span><br><span class="line">  &#125;,</span><br><span class="line">  say() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`I am <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>`</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> a = <span class="keyword">new</span> Person(<span class="string">'a'</span>)</span><br></pre></td></tr></table></figure>
+<p>清晰很多有木有，‘继承’对象的基本属性，方法定义都不再割裂开来，我们可以很方便的定义一个原型对象并初始化它的子对象。</p>
+<p><strong>以上，我们了解到一个对象是如何诞生的，也知道，对象的行为、属性来源于另一个所谓的原型对象，以此串联而成的便是原型链，所有的源头的均会回到 js 基本类型 Object.prototype 或 null</strong></p>
 <blockquote>
-<p>对象深、浅拷贝<br>null undefined区别<br>值类型确定：typeof、instanceof、Object.prototype.toString<br>NaN（Not a Number）——任何运算都是自身，属于Number；Infinity——无穷大/小，非0数值除以0；两者运算求导，不可导为NaN</p>
+<p>就像<em>你不知道的 JS 上</em>一书所阐明的，JS 中对象的描述采用属性<strong>委托</strong>设计方式而非<strong>类继承</strong>设计方式。对象间的关联是自由的，也更加强大。再上个图理凑字数也是不错滴：</p>
 </blockquote>
-<p><strong>typeof</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> a === <span class="string">'undefined'</span> <span class="comment">// 用于检测变量、函数是否定义</span></span><br><span class="line">!a &amp;&amp; <span class="keyword">typeof</span> a === <span class="string">'object'</span> <span class="comment">// 检测null，可检测出的为除null基本数据类型+function</span></span><br></pre></td></tr></table></figure></p>
-<h4 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h4><p>概念： 数据集或功能集——面向对象编程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">抽象性：抽取我们所需要的数据信息等</span><br><span class="line">封装性</span><br><span class="line">继承性</span><br></pre></td></tr></table></figure></p>
-<ol>
-<li>js没有类概念，何为类？——具有某些共同特性对象的集合。<br>不理解？还记得生物课上的<strong>界门纲目科属种</strong>吗，或者交通工具-汽车-本田-具体到某个型号。<br>嗯，只可意会不可言传。</li>
-<li>类有大类小类，就像一个包着一个的圈圈，小类拥有大类的特性——引申出类继承<br>也有部分圈的交叉，这时候涉及混合，先不讨论</li>
-<li>我们认知里面的对象，不就是可以通过这些来定义吗？所以有了对象通过类的实例化</li>
-<li>js是面向对象概念语言，直接就规定了具体对象的特性与行为，这时候对象与对象直接就完全隔离，那如何复用一些共同的特性与行为呢？于是乎有了prototype（原型），顾名思义便是对象的来源——另一个<strong>原型对象</strong>；这样子很明显会有个源头——Object，一层套一层所以和类有个鬼区别？原型对象有个constructor（构造函数）属性<br>原型对象<br>原型链<br>函数对象<br>构造函数<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4></li>
-</ol>
-<p>继承对象的特性，需要区分类数组（arguments）<br>类数组转为数组或使用数组方法：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = <span class="built_in">Array</span>.prototype.slice.call(arrayLike)</span><br><span class="line"><span class="built_in">Array</span>.prototype.forEach.call(arrayLike, fn)</span><br></pre></td></tr></table></figure>
+<img src="/assets/prototype.jpg">
+
       
     </div>
     
@@ -477,7 +415,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/JS/" rel="tag"># JS</a>
+            <a href="/tags/js/" rel="tag"># js</a>
           
         </div>
       
@@ -490,15 +428,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/07/16/web前端打印实现/" rel="next" title="web前端打印实现">
+                <i class="fa fa-chevron-left"></i> web前端打印实现
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/10/git备忘录/" rel="prev" title="Git备忘录">
-                Git备忘录 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -639,7 +577,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#何为程序"><span class="nav-number">1.1.</span> <span class="nav-text">何为程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定位——轻量级的脚本语言"><span class="nav-number">1.2.</span> <span class="nav-text">定位——轻量级的脚本语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#js-的核心语法"><span class="nav-number">1.3.</span> <span class="nav-text">js 的核心语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基础语法"><span class="nav-number">1.3.1.</span> <span class="nav-text">基础语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据类型"><span class="nav-number">1.3.2.</span> <span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对象"><span class="nav-number">1.3.3.</span> <span class="nav-text">对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数组"><span class="nav-number">1.3.4.</span> <span class="nav-text">数组</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#让我们来new一个对象"><span class="nav-number">2.</span> <span class="nav-text">让我们来new一个对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#字面量方式"><span class="nav-number">2.1.</span> <span class="nav-text">字面量方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构造函数方式"><span class="nav-number">2.2.</span> <span class="nav-text">构造函数方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Object-create-方式"><span class="nav-number">2.3.</span> <span class="nav-text">Object.create()方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#class-关键字创建的对象"><span class="nav-number">2.4.</span> <span class="nav-text">class 关键字创建的对象</span></a></li></ol></li></ol></div>
             
 
           </div>

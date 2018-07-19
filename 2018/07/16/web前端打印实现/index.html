@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="web打印," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="背景需求 基于 web 现代浏览器实现批量打印电子面单（规格固定），各种带条码的单据（规格范围不固定）;如下所示">
+<meta name="keywords" content="web打印">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web前端打印实现">
+<meta property="og:url" content="https://devil0.github.io/2018/07/16/web前端打印实现/index.html">
+<meta property="og:site_name" content="devil_blog">
+<meta property="og:description" content="背景需求 基于 web 现代浏览器实现批量打印电子面单（规格固定），各种带条码的单据（规格范围不固定）;如下所示">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://devil0.github.io/assets/webPrint1.png">
+<meta property="og:image" content="https://devil0.github.io/assets/webPrint2.png">
+<meta property="og:image" content="https://devil0.github.io/assets/cainiaoPrint.png">
+<meta property="og:updated_time" content="2018-07-19T08:34:13.878Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="web前端打印实现">
+<meta name="twitter:description" content="背景需求 基于 web 现代浏览器实现批量打印电子面单（规格固定），各种带条码的单据（规格范围不固定）;如下所示">
+<meta name="twitter:image" content="https://devil0.github.io/assets/webPrint1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'Y5LZM433PZ',
+      apiKey: 'f4e266eed849d4da43f94176745467c1',
+      indexName: 'myBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://devil0.github.io/2018/07/16/web前端打印实现/"/>
+
+
+
+
+
+  <title>web前端打印实现 | devil_blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <a href="https://github.com/Devil0"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 2" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">devil_blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">where is the way, where are you</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://devil0.github.io/2018/07/16/web前端打印实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="谁动了我的代码">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/assets/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="devil_blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">web前端打印实现</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-16T16:40:34+08:00">
+                2018-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="背景需求"><a href="#背景需求" class="headerlink" title="背景需求"></a>背景需求</h3><blockquote>
+<p>基于 web 现代浏览器实现批量打印电子面单（规格固定），各种带条码的单据（规格范围不固定）;如下所示</p>
+</blockquote>
+<img src="/assets/webPrint1.png" width="200">
+<img src="/assets/webPrint2.png" width="200">
+<a id="more"></a>
+<h3 id="web-打印技术调研"><a href="#web-打印技术调研" class="headerlink" title="web 打印技术调研"></a>web 打印技术调研</h3><h4 id="浏览器的菜单打印功能"><a href="#浏览器的菜单打印功能" class="headerlink" title="浏览器的菜单打印功能"></a>浏览器的菜单打印功能</h4><p>这是最简单的，只需点击页面上的打印菜单，但是也是问题最多的，基本上是不能满足用户需要。比如：不能精确分页，有出现打出半行字的风险；改变纸型后打印出的格式和页面显示的格式相差太大；页眉页脚也需要从菜单中去设置，等等等等。这种方案最大的优势就是不需要做任何代码，点击打印就可以了。</p>
+<h4 id="window-print"><a href="#window-print" class="headerlink" title="window.print()"></a>window.print()</h4><p>这实际上，是浏览器打印功能菜单的一种程序调用。与点击打印功能菜单一样，不能精确分页，不能设置纸型，套打的问题更加无从谈起，只不过，可以让用户不用去点菜单，直接点击网页中的一个按钮，或一个链接里面调用罢了。<br>需要指出的是这种方法提供一个打印前和打印后的事件 onbeforeprint、onafterprint。可以在打印前的时候重新编辑一些格式，专门送去打印，打印后又处理回来。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">window</span>.<span class="title">onbeforeprint</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="comment">//将一些不需要打印的隐藏</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">window</span>.<span class="title">onafterprint</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="comment">//放开隐藏的元素</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>事实上，很多用户都是采用这种方式打印，但是这种方式最致命的缺点是不能设置打印参数，比如纸型，页边距，选择打印机等等。</p>
+<h4 id="导出-excel-导出-pdf-文件的打印"><a href="#导出-excel-导出-pdf-文件的打印" class="headerlink" title="导出 excel 导出 pdf 文件的打印"></a>导出 excel 导出 pdf 文件的打印</h4><p>将需要打印的数据导出 excel 文件或者导出 pdf 文件，然后打开 excel 文件或者 pdf 文件重新打印，用这种方案能实现精确的打印，套打也能实现，但是需要客户端安装 excel 和 adobe 软件，操作起来也有些麻烦，并且导出的 excel 文件可以重新修改编辑，一般用户都会要求系统提供这种导出的方案，也同时需要直接打印的功能，所以个人觉得这种方案也不能很好的解决打印的问题。</p>
+<h4 id="纯-activex-控件"><a href="#纯-activex-控件" class="headerlink" title="纯 activex 控件"></a>纯 activex 控件</h4><p>这种方案其实就是编写一个 c/s 的打印控件，然后嵌入到页面里面，将要打印的数据装入到控件中，然后打印。这种方案的优点是打印精度高，分页，设置打印参数等等都能实现。但是缺点也是很明显的，嵌入 activex 控件破坏了 web 应用的整体 html 风格，且这样的控件通常都比较大，一般都超过 1m，下载很慢。</p>
+<h4 id="applet-方式"><a href="#applet-方式" class="headerlink" title="applet 方式"></a>applet 方式</h4><p>采用 applet 方式，分页或精确打印，都可以做到完美，但缺点也很明显，表现在：<br>安装 applet 成本巨大。需要下载十几 m 的文件。<br>applet 本身可能并不大，但运行 applet 所需的 jre 一般&gt;10m。用户需要极大的耐心，来进行打印。<br>打印报表时，需要重新向服务器检索数据，效率低。<br>因为 applet 方案，一般采用 html 方式呈现数据，打印时 applet 必须向服务器检索同一张票据的数据，看上去，是打印了当前页的票据，实际上，applet 根本不会用当前 html 页的数据来打印，而是向服务器下载数据到 applet 中来打印。也就是说，打印的话，必须两次请求，一次 html 呈现，一次用来打印。<br>市场上 java 类的报表工具，一般推荐 applet 方式来实现打印。</p>
+<h4 id="轻量级的-activex-插件＋-dhtml-＋-javascript-＋后台代码（动态获取数据）"><a href="#轻量级的-activex-插件＋-dhtml-＋-javascript-＋后台代码（动态获取数据）" class="headerlink" title="轻量级的 activex 插件＋ dhtml ＋ javascript ＋后台代码（动态获取数据）"></a>轻量级的 activex 插件＋ dhtml ＋ javascript ＋后台代码（动态获取数据）</h4><p>轻量级 activex 插件：设置打印参数，比如预定义纸型，设置打印方向，打印边距，指定打印机，不弹出打印对话框直接打印等等。<br>dhtml ＋ javascript 编辑打印数据的格式展现，实现格式的自定义。<br>后台代码，可以是 java，dotnet 等等的，实现动态获取打印数据。<br>这种方案是比较理想的，只需要客户端下载一个很小的打印插件，客户端无需安装任何 c/s 的格式设计</p>
+<blockquote><p>以上来源:</p>
+<footer><strong>马开东博客</strong><cite><a href="http://www.makaidong.com/Web%E5%89%8D%E7%AB%AF1/224425.shtml" target="_blank" rel="noopener">几种web表格打印方案的比较</a></cite></footer></blockquote>
+<p>主要有如下主流控件：</p>
+<ul>
+<li>ScriptX</li>
+<li>PAZU</li>
+<li>jatoolsPrinter</li>
+<li>lodop<br>国内主要是 jatoolsPrinter 和 lodop，对比后 lodop 最合适——技术支持，免费的开放功能丰富</li>
+</ul>
+<h3 id="lodop-实现打印"><a href="#lodop-实现打印" class="headerlink" title="lodop 实现打印"></a>lodop 实现打印</h3><h4 id="打印工具说明"><a href="#打印工具说明" class="headerlink" title="打印工具说明"></a>打印工具说明</h4><p>Web 打印控件<a href="http://www.c-lodop.com/index.html" target="_blank" rel="noopener">Lodop</a><br>以插件形式扩展 JavaScript 打印编程接口，使得 web 可以操作控制打印,支持超文本打印或自定义指令打印</p>
+<h4 id="打印设计流程"><a href="#打印设计流程" class="headerlink" title="打印设计流程"></a>打印设计流程</h4><ol>
+<li><p>页面检测打印控件安装状态并提示</p>
+</li>
+<li><p>用户设置打印机、打印格式、字体等</p>
+</li>
+<li><p>勾选表格数据并点击打印弹框预览</p>
+</li>
+<li><p>打印状态返回并修改单据打印状态</p>
+</li>
+</ol>
+<h4 id="项目实现"><a href="#项目实现" class="headerlink" title="项目实现"></a>项目实现</h4><h5 id="基本流程"><a href="#基本流程" class="headerlink" title="基本流程"></a>基本流程</h5><blockquote>
+<p>你可能需要教程资料：<a href="http://www.c-lodop.com/download/C-LodopNoteBook20170904.zip" target="_blank" rel="noopener">C-Lodop 技术手册下载</a>、<a href="http://www.c-lodop.com/LodopDemo.html" target="_blank" rel="noopener">入门样例及说明</a></p>
+</blockquote>
+<ol>
+<li><p>打印控件引入及引导安装控件 JS 文件——LodopFuncs.js<br>对该文件的主函数 getLodop 模块化导出，修改相关文件里安装、调用和升级的程序代码为项目的弹框提示，去除升级检测。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getLodop</span>(<span class="params">oOBJECT, oEMBED</span>) </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>控件在页面内以 object 元素形式被引用。设置元素的 width 和 height 等于 0 来隐藏控件。</p>
+</li>
+<li><p>采用 js 动态拼接字符串生成 html+css 的超文本并发送到打印插件进行打印</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LODOP.ADD_PRINT_HTM(<span class="string">'0mm'</span>, <span class="string">'0mm'</span>, <span class="string">'100%'</span>, <span class="string">'100%'</span>, strFormHtml)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置定时器监听回调捕获打印状态</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LODOP.On_Return_Remain = <span class="literal">true</span></span><br><span class="line">LODOP.On_Return = <span class="function"><span class="keyword">function</span>(<span class="params">TaskID, Value</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 根据TaskID和Value判断打印状态</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h5 id="模块化封装并设置打印回调"><a href="#模块化封装并设置打印回调" class="headerlink" title="模块化封装并设置打印回调"></a>模块化封装并设置打印回调</h5><ol>
+<li><p>模块化各个打印单据类型<br>项目里面有多个单据，打印的排版，指定打印机，内容等都有所不同，通过定义一个打印主函数，模块化封装各个单据及对应对应参数。我们只需在页面中调用函数并传入单据类型、打印数据及相关参数就可以实现具体单据的打印。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> printDemo1 = <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    printStyle = <span class="string">`样式控制`</span></span><br><span class="line">    printHtml = <span class="string">`填入数据的html模板`</span></span><br><span class="line">    <span class="keyword">const</span> params = &#123;</span><br><span class="line">        type: <span class="string">`Demo1`</span>,</span><br><span class="line">        printStyle: printStyle,</span><br><span class="line">        printHtml: printHtml,</span><br><span class="line">        size: &#123;</span><br><span class="line">            width: <span class="number">800</span>,</span><br><span class="line">            height: <span class="number">600</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> params</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>主函数流程控制<br>根据传入不同单据类型做处理并执行打印指令</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> printDemo1 <span class="keyword">from</span> <span class="string">'./printModule/demo1'</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">print</span>(<span class="params">type, data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (type) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'Demo1'</span>:</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">let</span> params = printDemo1(data)</span><br><span class="line">            <span class="keyword">return</span> doPrint(params)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'Demo2'</span>: ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>doPrint 函数执行打印返回一个 promise 对象，打印取消、成功或失败后的回调</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doPrint</span>(<span class="params">params</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 打印取消</span></span><br><span class="line">        reject(<span class="string">'cancel'</span>)</span><br><span class="line">        <span class="comment">// 打印成功</span></span><br><span class="line">        resolve(<span class="string">'success'</span>)</span><br><span class="line">        <span class="comment">// 打印失败</span></span><br><span class="line">        reject(<span class="string">'error'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>实际调用</p>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">print(data)</span><br><span class="line">  .then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.info(<span class="string">'打印成功'</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (err === <span class="string">'cancel'</span>) &#123;</span><br><span class="line">      <span class="built_in">console</span>.warning(<span class="string">'打印取消'</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.error(<span class="string">'打印失败'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="电子面单打印——菜鸟打印组件"><a href="#电子面单打印——菜鸟打印组件" class="headerlink" title="电子面单打印——菜鸟打印组件"></a>电子面单打印——菜鸟打印组件</h3><h4 id="打印工具说明-1"><a href="#打印工具说明-1" class="headerlink" title="打印工具说明"></a>打印工具说明</h4><ol>
+<li>菜鸟打印组件——模板设计器、打印客户端以及相应的接口和协议(<strong>菜鸟物流接入的电子面单都可以打除了顺丰</strong>)</li>
+<li>模板设计可自定义设置电子面单模板并生成相关代码</li>
+<li>打印机客户端用于 web 交互通讯打印相关电子面单</li>
+<li>相关接口协议用于前端 web 调用并控制打印设置</li>
+</ol>
+<h4 id="打印流程"><a href="#打印流程" class="headerlink" title="打印流程"></a>打印流程</h4><p><a href="http://cloudprint-docs-resource.oss-cn-shanghai.aliyuncs.com/printTest.html" target="_blank" rel="noopener">菜鸟打印 demo 文档</a><br>大致流程如下，相关代码均可写在一个 cainiaoChat.js 文件中并像 lodop 打印那样子模块化并做相关回调处理，打印的实现效果也和上文一致。相关的接口文档比较完善这里就大致讲解一下。<br><img src="/assets/cainiaoPrint.png"></p>
+<ol>
+<li><p>连接打印机<br>打印组件客户机soket接口为13528（https的话，端口是13529）<br>新建websoket连接打印组件并设置相关websoket监听事件</p>
+</li>
+<li><p>配置打印机,可配置项如下：<br>打印机名称<br>模板上下联logo<br>水平和垂直偏移量<br>页面有无空边<br>打印机纸张宽高</p>
+</li>
+<li><p>获取电子面单数据并构建打印请求<br>异步请求获取到要打印的电子面单数据=&gt;按照格式要求构造request对象=&gt;把request用websoket发送至菜鸟组件生成电子面单=&gt;打印或预览设置</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/web打印/" rel="tag"># web打印</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/12/前端文件上传下载/" rel="next" title="前端文件上传下载">
+                <i class="fa fa-chevron-left"></i> 前端文件上传下载
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/17/再次思考js中的原型/" rel="prev" title="再次思考js中的原型">
+                再次思考js中的原型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTgxMS8xMjM0Nw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/assets/avatar.jpg"
+                alt="谁动了我的代码" />
+            
+              <p class="site-author-name" itemprop="name">谁动了我的代码</p>
+              <p class="site-description motion-element" itemprop="description">A blog show and record my life, as a front-end</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景需求"><span class="nav-number">1.</span> <span class="nav-text">背景需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#web-打印技术调研"><span class="nav-number">2.</span> <span class="nav-text">web 打印技术调研</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#浏览器的菜单打印功能"><span class="nav-number">2.1.</span> <span class="nav-text">浏览器的菜单打印功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#window-print"><span class="nav-number">2.2.</span> <span class="nav-text">window.print()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#导出-excel-导出-pdf-文件的打印"><span class="nav-number">2.3.</span> <span class="nav-text">导出 excel 导出 pdf 文件的打印</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#纯-activex-控件"><span class="nav-number">2.4.</span> <span class="nav-text">纯 activex 控件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#applet-方式"><span class="nav-number">2.5.</span> <span class="nav-text">applet 方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#轻量级的-activex-插件＋-dhtml-＋-javascript-＋后台代码（动态获取数据）"><span class="nav-number">2.6.</span> <span class="nav-text">轻量级的 activex 插件＋ dhtml ＋ javascript ＋后台代码（动态获取数据）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lodop-实现打印"><span class="nav-number">3.</span> <span class="nav-text">lodop 实现打印</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#打印工具说明"><span class="nav-number">3.1.</span> <span class="nav-text">打印工具说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#打印设计流程"><span class="nav-number">3.2.</span> <span class="nav-text">打印设计流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#项目实现"><span class="nav-number">3.3.</span> <span class="nav-text">项目实现</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基本流程"><span class="nav-number">3.3.1.</span> <span class="nav-text">基本流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#模块化封装并设置打印回调"><span class="nav-number">3.3.2.</span> <span class="nav-text">模块化封装并设置打印回调</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#电子面单打印——菜鸟打印组件"><span class="nav-number">4.</span> <span class="nav-text">电子面单打印——菜鸟打印组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#打印工具说明-1"><span class="nav-number">4.1.</span> <span class="nav-text">打印工具说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#打印流程"><span class="nav-number">4.2.</span> <span class="nav-text">打印流程</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">谁动了我的代码</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
