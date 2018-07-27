@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="读书笔记,js," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="据说读书厉害的某高考状元说：把书读薄，把书读厚，然后你就会吃透这本书了。好吧我编不下去了，反正技术书不是网页武侠爽文随便瞄几眼就过去了，要理解吃透相关概念。面对一本书我们都需要好好思考怎么去读它才能最大限度从里面汲取养分，而不是看了好几本想起来脑袋空空。  把书读薄：提取书的框架和要点，乍一看去，就回忆起这部分讲的是什么,形成自己的体系脉络把书读厚：关注书的具体解释，引申意义，细节内容，关联性内容">
+<meta name="keywords" content="读书笔记,js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="you don&#39;t know JS 简约版（上）">
+<meta property="og:url" content="https://devil0.github.io/2018/07/20/you don't know JS 简约版/index.html">
+<meta property="og:site_name" content="devil_blog">
+<meta property="og:description" content="据说读书厉害的某高考状元说：把书读薄，把书读厚，然后你就会吃透这本书了。好吧我编不下去了，反正技术书不是网页武侠爽文随便瞄几眼就过去了，要理解吃透相关概念。面对一本书我们都需要好好思考怎么去读它才能最大限度从里面汲取养分，而不是看了好几本想起来脑袋空空。  把书读薄：提取书的框架和要点，乍一看去，就回忆起这部分讲的是什么,形成自己的体系脉络把书读厚：关注书的具体解释，引申意义，细节内容，关联性内容">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-07-27T08:26:50.319Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="you don&#39;t know JS 简约版（上）">
+<meta name="twitter:description" content="据说读书厉害的某高考状元说：把书读薄，把书读厚，然后你就会吃透这本书了。好吧我编不下去了，反正技术书不是网页武侠爽文随便瞄几眼就过去了，要理解吃透相关概念。面对一本书我们都需要好好思考怎么去读它才能最大限度从里面汲取养分，而不是看了好几本想起来脑袋空空。  把书读薄：提取书的框架和要点，乍一看去，就回忆起这部分讲的是什么,形成自己的体系脉络把书读厚：关注书的具体解释，引申意义，细节内容，关联性内容">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'Y5LZM433PZ',
+      apiKey: 'f4e266eed849d4da43f94176745467c1',
+      indexName: 'myBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://devil0.github.io/2018/07/20/you don't know JS 简约版/"/>
+
+
+
+
+
+  <title>you don't know JS 简约版（上） | devil_blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <a href="https://github.com/Devil0"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 2" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">devil_blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">where is the way, where are you</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://devil0.github.io/2018/07/20/you don't know JS 简约版/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="谁动了我的代码">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/assets/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="devil_blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">you don't know JS 简约版（上）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-20T16:32:03+08:00">
+                2018-07-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>据说读书厉害的某高考状元说：把书读薄，把书读厚，然后你就会吃透这本书了。好吧我编不下去了，反正技术书不是网页武侠爽文随便瞄几眼就过去了，要理解吃透相关概念。面对一本书我们都需要好好思考怎么去读它才能最大限度从里面汲取养分，而不是看了好几本想起来脑袋空空。</p>
+<blockquote>
+<p><strong>把书读薄</strong>：提取书的框架和要点，乍一看去，就回忆起这部分讲的是什么,形成自己的体系脉络<br><strong>把书读厚</strong>：关注书的具体解释，引申意义，细节内容，关联性内容，如同给书做了很多的注释，所以越看越厚</p>
+</blockquote>
+<p>这个系列的书是真滴不错，刷新不少认知也加深很多理解，经典好书当然值得我们好好吸毒。。。细读（这输入法）。但是我觉得它还不够薄，所以再来提炼一波。原书分为上中下三个系列，一口吃不成一个胖子，所以这边也分成三个篇章分别对应。</p>
+<a id="more"></a>
+<h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><h4 id="作用域概念"><a href="#作用域概念" class="headerlink" title="作用域概念"></a>作用域概念</h4><ol>
+<li>编译：分词/词法分析,解析/语法分析（Abstract Syntax Tree，AST),代码生成</li>
+<li>作用域是一套规则，用于确定在何处以及如何查找变量（标识符）。如果查找的目的是对<br>变量进行赋值，那么就会使用 LHS 查询；如果目的是获取变量的值，就会使用 RHS 查询</li>
+</ol>
+<h4 id="词法作用域"><a href="#词法作用域" class="headerlink" title="词法作用域"></a>词法作用域</h4><ol>
+<li>概念：词法作用域就是定义在词法阶段的作用域。换句话说，词法作用域是由你在写<br>代码时将变量和块作用域写在哪里来决定的，因此当词法分析器处理代码时会保持作用域<br>不变（大部分情况下是这样的）</li>
+<li>eval(..)和 with 会在运行时修改或创建新的作用域，以此来欺骗其他在书写时定义的词法作用域。</li>
+<li>主要区别：词法作用域是在写代码或者说定义时确定的，而动态作用域是在运行时确定的。（this 也是！）词法作用域关注函数在何处声明，而动态作用域关注函数从何处调用。</li>
+</ol>
+<h4 id="函数作用域和块作用域"><a href="#函数作用域和块作用域" class="headerlink" title="函数作用域和块作用域"></a>函数作用域和块作用域</h4><ol>
+<li>最小特权原则中引申出来，某个模块或对象的 API 设计，接口清晰明了，私有化，模块化</li>
+<li>区分函数声明和表达式最简单的方法是看 function 关键字出现在声明中的位置（不仅仅是一行代码，而是整个声明中的置。如果 function 是声明中的第一个词，那么就是一个函数声明，否则就是一个函数表达式</li>
+<li>IIFE，代表立即执行函数表达式（Immediately Invoked Function Expression）——避免变量污染全局</li>
+<li>块作用域指的是变量和函数不仅可以属于所处的作用域，也可以属于某个代码块（通常指 { .. } 内部）</li>
+</ol>
+<h4 id="提升"><a href="#提升" class="headerlink" title="提升"></a>提升</h4><p><code>var a = 2</code>——JavaScript 引擎第一个是编译阶段的任务，而第二个则是执行阶段的任务；<br>声明（变量和函数）都会被“移动”到各作用域的最顶端，这个过程被称为提升（函数优先）</p>
+<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><h4 id="作用域闭包"><a href="#作用域闭包" class="headerlink" title="作用域闭包"></a>作用域闭包</h4><p><em>当函数可以记住并访问所在的词法作用域，即使函数是在当前词法作用域之外执行，这时就产生了闭包</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// first</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++) &#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> <span class="title">timer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i)</span><br><span class="line">  &#125;, i * <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// second</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++) &#123;</span><br><span class="line">  (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span> <span class="title">timer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(i)</span><br><span class="line">    &#125;, i * <span class="number">1000</span>)</span><br><span class="line">  &#125;)()</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// third</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++) &#123;</span><br><span class="line">  (<span class="function"><span class="keyword">function</span>(<span class="params">j</span>) </span>&#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span> <span class="title">timer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(j)</span><br><span class="line">    &#125;, j * <span class="number">1000</span>)</span><br><span class="line">  &#125;)(i)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// forth</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i++) &#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> <span class="title">timer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i)</span><br><span class="line">  &#125;, i * <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="模块化实现"><a href="#模块化实现" class="headerlink" title="模块化实现"></a>模块化实现</h4><ol>
+<li>必须有外部的封闭函数，该函数必须至少被调用一次（每次调用都会创建一个新的模块实例）</li>
+<li>封闭函数必须返回至少一个内部函数，这样内部函数才能在私有作用域中形成闭包，并且可以访问或者修改私有的状态。</li>
+<li><p>代码实现</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> MyModules = (<span class="function"><span class="keyword">function</span> <span class="title">Manager</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> modules = &#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">define</span>(<span class="params">name, deps, impl</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// deps:模块依赖；这里根据模块名取出对应模块</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; deps.length; i++) &#123;</span><br><span class="line">      deps[i] = modules[deps[i]]</span><br><span class="line">    &#125;</span><br><span class="line">    modules[name] = impl.apply(impl, deps)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> modules[name]</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    define: define,</span><br><span class="line">    get: get</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>es6 采用文件模块化机制<br>一个文件一个 module，export 导出要暴露的 API，在需要引入的文件里用 import 添加模块并绑定到相应变量上</p>
+</li>
+</ol>
+<h3 id="this"><a href="#this" class="headerlink" title="this"></a>this</h3><h4 id="this-概念"><a href="#this-概念" class="headerlink" title="this 概念"></a>this 概念</h4><ol>
+<li>作用：隐式传递上下文对象——精准而优雅</li>
+<li>误区：函数内部调用自身与 this 调用自身区别。具名函数可通过函数名访问自身（词法作用域），this 方式则要 call、applay、bind 指向函数。</li>
+<li>学习 this 的第一步是明白 this 既不指向函数自身也不指向函数的词法作用域；this 实际上是在函数被调用时发生的绑定，它指向什么完全取决于函数在哪里被调用</li>
+<li><p>绑定规则</p>
+<ol>
+<li>默认绑定：全局，strict 模式下为 undefined</li>
+<li>隐式绑定：对象属性引用链中只有最顶层或者说最后一层会影响调用位置</li>
+<li><p>显式绑定：call(..) 和 apply(..)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bind</span>(<span class="params">fn, obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> fn.apply(obj, <span class="built_in">arguments</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了避免函数作为参数传入调用时丢失上下文，新增硬绑定<code>bind</code>,然后它还能进行柯里化（固定参数）</p>
+</li>
+<li>new 绑定：<br>实际上并不存在所谓的“构造函数”， 只有对于函数的“构造调用”<ol>
+<li>创建（或者说构造） 一个全新的对象。</li>
+<li>这个新对象会被执行 [[ 原型 ]] 连接。</li>
+<li>这个新对象会绑定到函数调用的 this。</li>
+<li>如果函数没有返回其他对象， 那么 new 表达式中的函数调用会自动返回这个新对象。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>绑定优先级<br>new 绑定&gt;显式绑定&gt;隐式绑定&gt;默认绑定</li>
+<li>=&gt;箭头函数<br>使用词法作用域取代了传统的 this 机制；相当于我们之前的<code>let self = this</code>,最好不要混用两种风格。</li>
+<li>有些调用可能在无意中使用默认绑定规则。 如果想“更安全” 地忽略 this 绑<br>定， 你可以使用一个 DMZ 对象， 比如 ø = Object.create(null)， 以保护全局对象</li>
+</ol>
+<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><h4 id="内置对象"><a href="#内置对象" class="headerlink" title="内置对象"></a>内置对象</h4><ol>
+<li>内置函数可以当作构造函数来使用，从而可以构造一个对应子类型的新对<br>象。在必要时语言会自动把字符串字面量转换成一个 String 对象</li>
+<li>String、Number、Boolean、Object、Function、Array、Date、RegExp、Error</li>
+<li>Object.prototype.tostring.call(obj)=== [object 对象子类型]</li>
+</ol>
+<h4 id="对象内容"><a href="#对象内容" class="headerlink" title="对象内容"></a>对象内容</h4><ol>
+<li>对象的内容是由一些存储在特定命名位置的（任意类型的）值组成的，<br>我们称之为属性（引用——指向这些值真正的存储位置）</li>
+<li>.a 语法通常被称为“属性访问”， [“a”] 语法通常被称为“键访问”；区别在于<strong>标识符的命名规范、键访问可接受变量并将变量转为字符串</strong></li>
+<li>数组有一套更加结构化的值存储机制，期望的是数值下标，所以谨慎使用可转为数字的属性添加至数组，最好不要以对象形式修改数组属性</li>
+</ol>
+<h4 id="对象复制"><a href="#对象复制" class="headerlink" title="对象复制"></a>对象复制</h4><ol>
+<li><p>浅复制</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> newObj = <span class="built_in">Object</span>.assign(&#123;&#125;, myObject)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>深复制</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JSON 安全的对象</span></span><br><span class="line"><span class="keyword">var</span> newObj = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(myObject))</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="属性描述符"><a href="#属性描述符" class="headerlink" title="属性描述符"></a>属性描述符</h4><ol>
+<li><p>定义与查看</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.defineProperty(obj,a,&#123;</span><br><span class="line">    value: <span class="number">1</span>,</span><br><span class="line">    writable: <span class="literal">true</span>,</span><br><span class="line">    configurable: <span class="literal">true</span>,</span><br><span class="line">    enumerable: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">)，</span><br><span class="line"><span class="built_in">Object</span>.getOwnPropertyDescriptor(obj,a)</span><br><span class="line"><span class="comment">// &#123;</span></span><br><span class="line"><span class="comment">// value: 2,</span></span><br><span class="line"><span class="comment">// writable: true,</span></span><br><span class="line"><span class="comment">// enumerable: true,</span></span><br><span class="line"><span class="comment">// configurable: true</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>writable （可写）、enumerable （可枚举）和 configurable （可配置）</p>
+</li>
+<li>严格模式报错，非严格模式静默不生效</li>
+<li>设置对象不可变<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 禁止添加新属性</span></span><br><span class="line"><span class="built_in">Object</span>.preventExtensions(obj)</span><br><span class="line"><span class="comment">// 禁止配置或删除已有属性（在上面基础上）</span></span><br><span class="line"><span class="built_in">Object</span>.seal(obj)</span><br><span class="line"><span class="comment">// 禁止修改属性值（在上面基础上）</span></span><br><span class="line"><span class="built_in">Object</span>.freeze(obj)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="对象增删查改——-get-put"><a href="#对象增删查改——-get-put" class="headerlink" title="对象增删查改——[[get]] [[put]]"></a>对象增删查改——[[get]] [[put]]</h4><ol>
+<li>[[get]]：对象中查找是否有名称相同的属性——原型链查找——返回值 undefined</li>
+<li>[[Put]]：属性是否是访问描述符？存在 setter 就调用 setter：按照属性描述符设置</li>
+</ol>
+<h4 id="访问描述符-Getter-Setter"><a href="#访问描述符-Getter-Setter" class="headerlink" title="访问描述符 Getter Setter"></a>访问描述符 Getter Setter</h4><p>访问描述符优于属性描述符<br>两种定义方式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = &#123;</span><br><span class="line">  <span class="comment">// 给 a 定义一个 getter</span></span><br><span class="line">  get a() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>._a_</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 给 a 定义一个 setter</span></span><br><span class="line">  set a(val) &#123;</span><br><span class="line">    <span class="keyword">this</span>._a_ = val * <span class="number">2</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(</span><br><span class="line">  myObject, <span class="comment">// 目标对象</span></span><br><span class="line">  <span class="string">'a'</span>, <span class="comment">// 属性名</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// 描述符</span></span><br><span class="line">    get: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>._a_ * <span class="number">2</span></span><br><span class="line">    &#125;,</span><br><span class="line">    set: <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>._a_ = val * <span class="number">2</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h4 id="检测属性存在"><a href="#检测属性存在" class="headerlink" title="检测属性存在"></a>检测属性存在</h4><ol>
+<li>in 操作符会检查属性是否在对象及其[[Prototype]]原型链中；hasOwnProperty(..) 只会检查属性是否在 myObject 对象中</li>
+<li>Object.keys(..) 会返回一个数组，包含所有可枚举属性</li>
+<li>propertyIsEnumerable(..) 会检查给定的属性名是否直接存在于对象中</li>
+<li>Object.getOwnPropertyNames(..)会返回一个数组，包含所有属性，无论它们是否可枚举</li>
+</ol>
+<h4 id="遍历对象"><a href="#遍历对象" class="headerlink" title="遍历对象"></a>遍历对象</h4><ol>
+<li>传统：for..in 循环可以用来遍历对象的可枚举属性列表（包括 [[Prototype]] 链）</li>
+<li>ES5：forEach(..) 、 map(..)、every(..) 和 some(..)</li>
+<li>ES6： for..of （for..of 循环首先会向被访问对象请求一个迭代器对象，然后通过调用迭代器对象的 next() 方法来遍历所有返回值。） @iterator 本身并不是一个迭代器对象，而是一个返回迭代器对象的函数<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 给任何想遍历的对象定义 @@iterator</span></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(myObject, <span class="built_in">Symbol</span>.iterator, &#123;</span><br><span class="line">  enumerable: <span class="literal">false</span>, <span class="comment">// 不可枚举</span></span><br><span class="line">  writable: <span class="literal">false</span>,</span><br><span class="line">  configurable: <span class="literal">true</span>,</span><br><span class="line">  value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> o = <span class="keyword">this</span></span><br><span class="line">    <span class="keyword">var</span> idx = <span class="number">0</span></span><br><span class="line">    <span class="keyword">var</span> ks = <span class="built_in">Object</span>.keys(o)</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      next: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">          value: o[ks[idx++]],</span><br><span class="line">          done: idx &gt; ks.length</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 手动遍历 myObject</span></span><br><span class="line"><span class="keyword">var</span> it = myObject[<span class="built_in">Symbol</span>.iterator]()</span><br><span class="line">it.next()</span><br><span class="line"><span class="comment">// 用 for..of 遍历 myObject</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> v <span class="keyword">of</span> myObject) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(v)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="混合对象——类"><a href="#混合对象——类" class="headerlink" title="混合对象——类"></a>混合对象——类</h3><p>类相关的面向对象编程</p>
+<h4 id="类理论"><a href="#类理论" class="headerlink" title="类理论"></a>类理论</h4><ol>
+<li>类 / 继承描述了一种代码的组织结构形式——一种在软件中对真实世界中问题领域的建模方法</li>
+<li>类、继承、实例化、多态概念<ul>
+<li>类意味着复制。</li>
+<li>传统的类被实例化时，它的行为会被复制到实例中。类被继承时，行为也会被复制到子类中。</li>
+<li>多态（在继承链的不同层次名称相同但是功能不同的函数）看起来似乎是从子类引用父类，但是本质上引用的其实是复制的结果。</li>
+</ul>
+</li>
+</ol>
+<h4 id="类机制"><a href="#类机制" class="headerlink" title="类机制"></a>类机制</h4><ol>
+<li>类是概念，实例化复制相关特性行为后获得副本才是我们的对象</li>
+<li>类构造函数属于类，而且通常和类同名。此外，构造函数大多需要用 new 来调，这样语言引擎才知道你想要构造一个新的类实例——对象</li>
+</ol>
+<h4 id="类继承"><a href="#类继承" class="headerlink" title="类继承"></a>类继承</h4><ol>
+<li>面向类的语言中，你可以先定义一个类，然后定义一个继承前者的类</li>
+<li>定义好一个子类之后，相对于父类来说它就是一个独立并且完全不同的类。子类会包含父类行为的原始副本，但是也可以重写所有继承的行为甚至定义新行为</li>
+<li>多态：相同方法可在类继承中重写，多态并不表示子类和父类有关联，子类得到的只是父类的一份副本。类的继承其实就是复制。</li>
+<li>有些面向类的语言允许你继承多个“父类”。多重继承意味着所有父类的定义都会被复制到子类中。</li>
+</ol>
+<h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><ol>
+<li>对象内置属性[[Prototype]]</li>
+<li>in、for..in 等查找属性：[[Get]]——对象本身属性——查找 [[Prototype]] 链——Object.prototype</li>
+<li>设置属性<code>myObject.foo = &quot;bar&quot;</code>：<ol>
+<li>如果在 [[Prototype]] 链上层存在名为 foo 的普通数据访问属性并且没<br>有被标记为只读（<code>writable:true</code>），那就会直接在 myObject 中添加一个名为 foo 的新属性， 它是屏蔽属性。</li>
+<li>如果在 [[Prototype]]链上层存在 foo，但是它被标记为只读（<code>writable:false</code>）， 那么无法修改已有属性或者在 myObject 上创建屏蔽属性如果运行在严格模式下， 代码会抛出一个错误。 否则， 这条赋值语句会被忽略。 总之， 不会发生屏蔽。</li>
+<li>如果在 [[Prototype]] 链上层存在 foo 并且它是一个 setter（参见第 3 章）， 那就一定会调用这个 setter。 foo 不会被添加到（或者说屏蔽于） myObject， 也不会重新定义 foo 这个 setter。</li>
+</ol>
+</li>
+<li>理解 js 中的‘类’：<ol>
+<li>JavaScript 中只有对象，但是 js 却一直在模仿类</li>
+<li>继承意味着复制操作， JavaScript（默认） 并不会复制对象属性。 相反， JavaScript 会在两个对象之间创建一个关联，这样一个对象就可以通过委托访问另一个对象的属性和函数。</li>
+</ol>
+</li>
+<li>构造函数与原型继承<ol>
+<li>构造函数只是<code>new</code>调用函数，<code>new</code>操作的四个步骤？</li>
+<li>原型继承在于原型链的指向</li>
+<li>constructor 是函数原型的自带属性，指向函数，可被修改不靠谱</li>
+</ol>
+</li>
+<li><p>关联[[prototype]]:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 直接引用原型，Bar相当于没有用</span></span><br><span class="line">Bar.prototype = Foo.prototype</span><br><span class="line"><span class="comment">// Foo函数的属性初始化操作可能带来副作用：this.name=name</span></span><br><span class="line">Bar.prototype = <span class="keyword">new</span> Foo()</span><br><span class="line"><span class="comment">// 正确做法</span></span><br><span class="line"><span class="comment">// ES6 之前需要抛弃默认的 Bar.prototype</span></span><br><span class="line">Bar.ptototype = <span class="built_in">Object</span>.create(Foo.prototype)</span><br><span class="line"><span class="comment">// ES6 开始可以直接修改现有的 Bar.prototype</span></span><br><span class="line"><span class="built_in">Object</span>.setPrototypeOf(Bar.prototype, Foo.prototype)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>检测原型链关系：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 函数（‘类’）与对象</span></span><br><span class="line">obj <span class="keyword">instanceof</span> Fun <span class="comment">// true</span></span><br><span class="line"><span class="comment">// 对象与对象</span></span><br><span class="line">Fun.prototype.isPrototypeOf(Obj) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>.__proto__</code>的实现</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.defineProperty(<span class="built_in">Object</span>.prototype, <span class="string">'__proto__'</span>, &#123;</span><br><span class="line">  get: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Object</span>.getPrototypeOf(<span class="keyword">this</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  set: <span class="function"><span class="keyword">function</span>(<span class="params">o</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// ES6 中的 setPrototypeOf(..)</span></span><br><span class="line">    <span class="built_in">Object</span>.setPrototypeOf(<span class="keyword">this</span>, o)</span><br><span class="line">    <span class="keyword">return</span> o</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>class 并没有解决“类”机制的问题，而是隐藏并假装自己是静态类，本质上还是行为委托机制，只是在“类”模仿上走得更远</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+          
+            <a href="/tags/js/" rel="tag"># js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/17/再次思考js中的原型/" rel="next" title="再次思考js中的原型">
+                <i class="fa fa-chevron-left"></i> 再次思考js中的原型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/26/you don't know JS 简约版（中）/" rel="prev" title="you don't know JS 简约版（中）">
+                you don't know JS 简约版（中） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTgxMS8xMjM0Nw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/assets/avatar.jpg"
+                alt="谁动了我的代码" />
+            
+              <p class="site-author-name" itemprop="name">谁动了我的代码</p>
+              <p class="site-description motion-element" itemprop="description">A blog show and record my life, as a front-end</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#作用域"><span class="nav-number">1.</span> <span class="nav-text">作用域</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#作用域概念"><span class="nav-number">1.1.</span> <span class="nav-text">作用域概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#词法作用域"><span class="nav-number">1.2.</span> <span class="nav-text">词法作用域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数作用域和块作用域"><span class="nav-number">1.3.</span> <span class="nav-text">函数作用域和块作用域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#提升"><span class="nav-number">1.4.</span> <span class="nav-text">提升</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#闭包"><span class="nav-number">2.</span> <span class="nav-text">闭包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#作用域闭包"><span class="nav-number">2.1.</span> <span class="nav-text">作用域闭包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模块化实现"><span class="nav-number">2.2.</span> <span class="nav-text">模块化实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#this"><span class="nav-number">3.</span> <span class="nav-text">this</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#this-概念"><span class="nav-number">3.1.</span> <span class="nav-text">this 概念</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象"><span class="nav-number">4.</span> <span class="nav-text">对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#内置对象"><span class="nav-number">4.1.</span> <span class="nav-text">内置对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对象内容"><span class="nav-number">4.2.</span> <span class="nav-text">对象内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对象复制"><span class="nav-number">4.3.</span> <span class="nav-text">对象复制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#属性描述符"><span class="nav-number">4.4.</span> <span class="nav-text">属性描述符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对象增删查改——-get-put"><span class="nav-number">4.5.</span> <span class="nav-text">对象增删查改——[[get]] [[put]]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#访问描述符-Getter-Setter"><span class="nav-number">4.6.</span> <span class="nav-text">访问描述符 Getter Setter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#检测属性存在"><span class="nav-number">4.7.</span> <span class="nav-text">检测属性存在</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#遍历对象"><span class="nav-number">4.8.</span> <span class="nav-text">遍历对象</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#混合对象——类"><span class="nav-number">5.</span> <span class="nav-text">混合对象——类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类理论"><span class="nav-number">5.1.</span> <span class="nav-text">类理论</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类机制"><span class="nav-number">5.2.</span> <span class="nav-text">类机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类继承"><span class="nav-number">5.3.</span> <span class="nav-text">类继承</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原型"><span class="nav-number">6.</span> <span class="nav-text">原型</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">谁动了我的代码</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

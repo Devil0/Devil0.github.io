@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="读书笔记,js," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="深入编程程序程序常被称为源码或代码，它是一组特定的指令，用来指示计算机要执行哪些任务 语句程序就是多个语句的集合，它们合起来描述了程序要执行的所有步骤 表达式语句由一个或多个表达式组成。一个表达式是对一个变量或值的引用，或者是一组值和变量与运算符的组合。运算符，变量（值与类型），常量。">
+<meta name="keywords" content="读书笔记,js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="you don&#39;t know JS 简约版（下）">
+<meta property="og:url" content="https://devil0.github.io/2018/07/27/you don't know JS 简约版（下）/index.html">
+<meta property="og:site_name" content="devil_blog">
+<meta property="og:description" content="深入编程程序程序常被称为源码或代码，它是一组特定的指令，用来指示计算机要执行哪些任务 语句程序就是多个语句的集合，它们合起来描述了程序要执行的所有步骤 表达式语句由一个或多个表达式组成。一个表达式是对一个变量或值的引用，或者是一组值和变量与运算符的组合。运算符，变量（值与类型），常量。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-07-27T08:25:02.759Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="you don&#39;t know JS 简约版（下）">
+<meta name="twitter:description" content="深入编程程序程序常被称为源码或代码，它是一组特定的指令，用来指示计算机要执行哪些任务 语句程序就是多个语句的集合，它们合起来描述了程序要执行的所有步骤 表达式语句由一个或多个表达式组成。一个表达式是对一个变量或值的引用，或者是一组值和变量与运算符的组合。运算符，变量（值与类型），常量。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'Y5LZM433PZ',
+      apiKey: 'f4e266eed849d4da43f94176745467c1',
+      indexName: 'myBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://devil0.github.io/2018/07/27/you don't know JS 简约版（下）/"/>
+
+
+
+
+
+  <title>you don't know JS 简约版（下） | devil_blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <a href="https://github.com/Devil0"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 2" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">devil_blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">where is the way, where are you</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://devil0.github.io/2018/07/27/you don't know JS 简约版（下）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="谁动了我的代码">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/assets/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="devil_blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">you don't know JS 简约版（下）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-27T16:22:39+08:00">
+                2018-07-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="深入编程"><a href="#深入编程" class="headerlink" title="深入编程"></a>深入编程</h3><h4 id="程序"><a href="#程序" class="headerlink" title="程序"></a>程序</h4><p>程序常被称为源码或代码，它是一组特定的指令，用来指示计算机要执行哪些任务</p>
+<h4 id="语句"><a href="#语句" class="headerlink" title="语句"></a>语句</h4><p>程序就是多个语句的集合，它们合起来描述了程序要执行的所有步骤</p>
+<h4 id="表达式"><a href="#表达式" class="headerlink" title="表达式"></a>表达式</h4><p>语句由一个或多个表达式组成。一个表达式是对一个变量或值的引用，或者是一组值和变量与运算符的组合。运算符，变量（值与类型），常量。</p>
+<a id="more"></a>
+<h4 id="执行程序"><a href="#执行程序" class="headerlink" title="执行程序"></a>执行程序</h4><p>解释器或编译器将编写的代码翻译成计算机可以理解的命令</p>
+<h4 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h4><p>Chrome <code>about:blank</code> ，prompt，alert，console</p>
+<h4 id="代码块与逻辑语句"><a href="#代码块与逻辑语句" class="headerlink" title="代码块与逻辑语句"></a>代码块与逻辑语句</h4><p>{}（词法作用域）、条件判断、循环/迭代、函数</p>
+<h4 id="编程小结"><a href="#编程小结" class="headerlink" title="编程小结"></a>编程小结</h4><ul>
+<li>在值上执行动作需要运算符。</li>
+<li>执行各种类型的动作需要值和类型，比如，对数字进行数学运算，用字符串输出。</li>
+<li>在程序的执行过程中需要变量来保存数据（也就是状态）。</li>
+<li>需要 if 这样的条件判断来作出决策。</li>
+<li>需要循环来重复任务，直到不满足某个条件。</li>
+<li>需要函数将代码组织为逻辑上可复用的块。</li>
+</ul>
+<h3 id="深入-JavaScript"><a href="#深入-JavaScript" class="headerlink" title="深入 JavaScript"></a>深入 JavaScript</h3><ol>
+<li>值和类型：弱类型、子类型、装箱、类型转换、对象拷贝</li>
+<li>变量：作用域，提升</li>
+<li>严格模式的情况</li>
+<li>函数：IIFE、闭包（模块）</li>
+<li>this 标识符</li>
+<li>原型</li>
+<li>polyfilling 与 transpiling</li>
+<li>宿主对象——document、alert(..)</li>
+</ol>
+<h3 id="ES6"><a href="#ES6" class="headerlink" title="ES6"></a>ES6</h3><h4 id="js-版本管理"><a href="#js-版本管理" class="headerlink" title="js 版本管理"></a>js 版本管理</h4><ol>
+<li>2009 年，ES5 正式发布（然后是 2011 年的 ES5.1）</li>
+<li>早期——基于某一组主要特性组合为单位，然后未能按时交付。。。如 ES6：发布日期从 2013 年拖到 2014 年，然后又到 2015 年</li>
+<li>ES6 之后——把 JavaScript 未来的版本看成基于单个特性：es2016，es2017</li>
+<li>新语法：transpiling——transformation ＋ compiling<ul>
+<li>新的特性和模式一旦在标准中稳定下来，并且浏览器能够实现它们之后，就能够在开发者的代码中得到应用</li>
+<li>利用专门的工具把你的 ES6 代码转化为等价（或近似！）的可以在 ES5 环境下工作的代码</li>
+</ul>
+</li>
+<li>新 API：shim/polyfill<ul>
+<li><a href="https:// github.com/paulmillr/es6-shim/" target="_blank" rel="noopener">ES6 Shim</a></li>
+</ul>
+</li>
+</ol>
+<h4 id="ES6-新语法"><a href="#ES6-新语法" class="headerlink" title="ES6 新语法"></a>ES6 新语法</h4><h5 id="块作用域"><a href="#块作用域" class="headerlink" title="块作用域"></a>块作用域</h5><ol>
+<li>ES5 之前只能函数或 IIFE 创建</li>
+<li>{ let.. }——隐式</li>
+<li>var 都是归属于包含它的整个函数作用域。 let/const 声明归属于块作用域</li>
+<li>var 有提升，let/const 不会（TDZ）—— let 声明放在其所在作用域的最前面</li>
+<li>const 创建常量，必须要有显式的初始化</li>
+<li>块作用域函数</li>
+</ol>
+<h5 id="函数默认参数"><a href="#函数默认参数" class="headerlink" title="函数默认参数"></a>函数默认参数</h5><ol>
+<li><p>传参形式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ES5</span></span><br><span class="line">x = x || <span class="number">11</span></span><br><span class="line">x = x !== <span class="literal">undefined</span> ? x : <span class="number">11</span></span><br><span class="line">x = <span class="number">0</span> <span class="keyword">in</span> <span class="built_in">arguments</span> ? x : <span class="number">11</span></span><br><span class="line"><span class="comment">// ES6</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">x = <span class="number">11</span></span>) </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接受默认值表达式——惰性求值</p>
+</li>
+</ol>
+<h5 id="解构——结构化赋值"><a href="#解构——结构化赋值" class="headerlink" title="解构——结构化赋值"></a>解构——结构化赋值</h5><ol>
+<li>对象属性赋值模式<ul>
+<li><code>target: source</code>解构反转赋值</li>
+<li>对象解构形式允许多次列出同一个源属性（持有值类型任意）</li>
+</ul>
+</li>
+<li>数组解构赋值</li>
+<li>太多，太少，刚刚好</li>
+<li><p>默认值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> [a = <span class="number">3</span>, b = <span class="number">6</span>, c = <span class="number">9</span>, d = <span class="number">12</span>] = foo()</span><br><span class="line"><span class="keyword">var</span> &#123; x = <span class="number">5</span>, y = <span class="number">10</span>, z = <span class="number">15</span>, w = <span class="number">20</span> &#125; = bar()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>嵌套解构</p>
+</li>
+<li><p>解构参数</p>
+<ul>
+<li><p>解构默认值＋参数默认值（注意<em>解构默认值和函数参数默认值之间的差别</em>）eg：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f6</span>(<span class="params">&#123; x = <span class="number">10</span> &#125; = &#123;&#125;, &#123; y &#125; = &#123; y: <span class="number">10</span> &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(x, y)</span><br><span class="line">&#125;</span><br><span class="line">f6() <span class="comment">// 10 10</span></span><br><span class="line">f6(<span class="literal">undefined</span>, <span class="literal">undefined</span>) <span class="comment">// 10 10</span></span><br><span class="line">f6(&#123;&#125;, <span class="literal">undefined</span>) <span class="comment">// 10 10</span></span><br><span class="line">f6(&#123;&#125;, &#123;&#125;) <span class="comment">// 10 undefined</span></span><br><span class="line">f6(<span class="literal">undefined</span>, &#123;&#125;) <span class="comment">// 10 undefined</span></span><br><span class="line">f6(&#123; <span class="attr">x</span>: <span class="number">2</span> &#125;, &#123; <span class="attr">y</span>: <span class="number">3</span> &#125;) <span class="comment">// 2 3</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>嵌套默认：解构并重组——关键在于属性默认赋值与重新解构赋值结合起来。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 把defaults合并进config</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">// (带默认值赋值的)解构</span></span><br><span class="line">  <span class="keyword">let</span> &#123;</span><br><span class="line">    options: &#123;</span><br><span class="line">      remove = defaults.options.remove,</span><br><span class="line">      enable = defaults.options.enable,</span><br><span class="line">      instance = defaults.options.instance</span><br><span class="line">    &#125; = &#123;&#125;,</span><br><span class="line">    log: &#123; warn = defaults.log.warn, error = defaults.log.error &#125; = &#123;&#125;</span><br><span class="line">  &#125; = config</span><br><span class="line">  <span class="comment">// 重组</span></span><br><span class="line">  config = &#123;</span><br><span class="line">    options: &#123; remove, enable, instance &#125;,</span><br><span class="line">    log: &#123; warn, error &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<h5 id="对象字面量扩展"><a href="#对象字面量扩展" class="headerlink" title="对象字面量扩展"></a>对象字面量扩展</h5><ol>
+<li>简洁属性<code>{a:a,b:b}</code>=&gt;<code>{a,b}</code></li>
+<li>简洁方法<code>{a:function(){},b:function(){}}</code>=&gt;<code>{a(){},b(){}}</code>(!<strong>不适用于递归或者事件绑定 / 解绑定</strong>)</li>
+<li>计算属性名</li>
+<li>设置[[prototype]]<ul>
+<li>Object.setPrototypeOf(..)</li>
+<li>super.xxx</li>
+</ul>
+</li>
+<li><p>模板字符量<code>${}</code></p>
+<ul>
+<li>字符串插入表达式——词法作用域内</li>
+<li>标签模板字面量<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">strings, ...values</span>) </span>&#123;</span><br><span class="line">  cosole.log(string)</span><br><span class="line">  cosole.log(values)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> desc = <span class="string">'awesome'</span></span><br><span class="line">foo<span class="string">`Everything is <span class="subst">$&#123;desc&#125;</span>!`</span></span><br><span class="line"><span class="comment">// 获取并操作原始的变量和字符串，输出如下</span></span><br><span class="line"><span class="comment">// [ "Everything is ", "!"]</span></span><br><span class="line"><span class="comment">// [ "awesome" ]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>箭头函数——简短、绑定 this 词法作用域（优先级最高）</p>
+</li>
+</ol>
+<blockquote>
+<p>待完善</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+          
+            <a href="/tags/js/" rel="tag"># js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/26/you don't know JS 简约版（中）/" rel="next" title="you don't know JS 简约版（中）">
+                <i class="fa fa-chevron-left"></i> you don't know JS 简约版（中）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTgxMS8xMjM0Nw=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/assets/avatar.jpg"
+                alt="谁动了我的代码" />
+            
+              <p class="site-author-name" itemprop="name">谁动了我的代码</p>
+              <p class="site-description motion-element" itemprop="description">A blog show and record my life, as a front-end</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#深入编程"><span class="nav-number">1.</span> <span class="nav-text">深入编程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#程序"><span class="nav-number">1.1.</span> <span class="nav-text">程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#语句"><span class="nav-number">1.2.</span> <span class="nav-text">语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#表达式"><span class="nav-number">1.3.</span> <span class="nav-text">表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行程序"><span class="nav-number">1.4.</span> <span class="nav-text">执行程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实践"><span class="nav-number">1.5.</span> <span class="nav-text">实践</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码块与逻辑语句"><span class="nav-number">1.6.</span> <span class="nav-text">代码块与逻辑语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编程小结"><span class="nav-number">1.7.</span> <span class="nav-text">编程小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深入-JavaScript"><span class="nav-number">2.</span> <span class="nav-text">深入 JavaScript</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ES6"><span class="nav-number">3.</span> <span class="nav-text">ES6</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#js-版本管理"><span class="nav-number">3.1.</span> <span class="nav-text">js 版本管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ES6-新语法"><span class="nav-number">3.2.</span> <span class="nav-text">ES6 新语法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#块作用域"><span class="nav-number">3.2.1.</span> <span class="nav-text">块作用域</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#函数默认参数"><span class="nav-number">3.2.2.</span> <span class="nav-text">函数默认参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解构——结构化赋值"><span class="nav-number">3.2.3.</span> <span class="nav-text">解构——结构化赋值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#对象字面量扩展"><span class="nav-number">3.2.4.</span> <span class="nav-text">对象字面量扩展</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">谁动了我的代码</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
